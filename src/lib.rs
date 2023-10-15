@@ -1,3 +1,4 @@
+#![no_std]
 use arduino_hal::hal::port::PB1;
 use arduino_hal::port::mode::PwmOutput;
 use arduino_hal::simple_pwm::Timer1Pwm;
