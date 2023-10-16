@@ -10,6 +10,7 @@ edition = "2021"
 [dependencies.arduino-hal]
 git = "https://github.com/rahix/avr-hal"
 rev = "7dfa6d322b9df98b2d98afe0e14a97afe0187ac1"
+features = ['arduino-nano']
 
 # Configure the build for minimal size - AVRs have very little program memory
 [profile.dev]
