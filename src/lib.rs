@@ -4,26 +4,16 @@
 //! Minimal functionality, easy to use
 
 #![no_std]
-use arduino_hal::hal::port::{PB1, PB2, PB3, PD3, PD5, PD6};
 use arduino_hal::port::mode::PwmOutput;
-use arduino_hal::simple_pwm::Timer1Pwm;
+use arduino_hal::simple_pwm::{Timer1Pwm, PwmPinOps};
 use arduino_hal::port::Pin;
 
 pub const LEFT_DUTY: u8 = 12;
 pub const STOP_DUTY: u8 = 22;
 pub const RIGHT_DUTY: u8 = 32;
 
-pub enum UnoPinsPWM {
-    PB1(PB1),
-    PB2(PB2),
-    PB3(PB3),
-    PD3(PD3),
-    PD5(PD5),
-    PD6(PD6)
-}
-
-pub struct MG995 {
-    pin: Pin<PwmOutput<Timer1Pwm>, UnoPinsPWM>,
+pub struct MG995<P> {
+    pin: Pin<PwmOutput<Timer1Pwm>, P>,
     left_duty: u8,
     stop_duty: u8,
     right_duty: u8,
@@ -51,8 +41,8 @@ pub struct MG995 {
 ///         arduino_hal::delay_ms(500);
 ///     }
 /// ```
-impl MG995 {
-    pub fn new(pin: Pin<PwmOutput<Timer1Pwm>, UnoPinsPWM>, left_duty: u8, stop_duty:u8, right_duty: u8, is_inverted: bool) -> MG995 {
+impl<P> MG995<P> where P: PwmPinOps<Timer1Pwm> {
+    pub fn new(pin: Pin<PwmOutput<Timer1Pwm>, P>, left_duty: u8, stop_duty:u8, right_duty: u8, is_inverted: bool) -> MG995<P> {
         MG995 { pin, left_duty, stop_duty, right_duty, is_inverted }
     }
 
